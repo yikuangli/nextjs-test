@@ -3,9 +3,11 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import styles from '@/app/ui/home.module.css';
 import Image from 'next/image';
+import { fetchEvents } from './lib/query';
 
 
 export default function Page() {
+  fetchEvents().then(events => console.log(events));
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-orange-500 p-4 md:h-52">
