@@ -1,0 +1,16 @@
+  await client.query(`
+      CREATE TABLE IF NOT EXISTS event (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        time TIMESTAMP NOT NULL,
+        description TEXT,
+        route_url VARCHAR(255),
+        ride_type VARCHAR(50),
+        route_length FLOAT,
+        location VARCHAR(255),
+        organization_id INTEGER REFERENCES organization(id),
+        users_joined TEXT[]
+      );
+
+Above is my current event table like, but I want do some changes to the table, I want to add a few cloumn: start point address, ride pace, area, event leader name, passphrase, 
+how can I edit the table, and add few test datas

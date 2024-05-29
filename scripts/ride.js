@@ -78,14 +78,47 @@ const insertFakeData = async () => {
 
 const main = async () => {
     try {
-        const client = await db.connect();
-        await createTables(client);
-        console.log('Tables created successfully.');
-        await insertFakeData();
-        console.log('Fake data inserted successfully.');
+        // const client = await db.connect();
+        // await createTables(client);
+        // console.log('Tables created successfully.');
+        // await insertFakeData();
+        // console.log('Fake data inserted successfully.');
+        await modifyEventTable()
     } catch (err) {
         console.error('Error executing script:', err);
-    } 
+    }
 };
+
+const modifyEventTable = async () => {
+    const client = await db.connect();
+    try {
+        await client.query('BEGIN');
+        // Alter the event table
+        await client.query(`
+        ALTER TABLE event
+        ADD COLUMN start_point_address VARCHAR(255),
+        ADD COLUMN ride_pace VARCHAR(50),
+        ADD COLUMN area VARCHAR(100),
+        ADD COLUMN event_leader_name VARCHAR(100),
+        ADD COLUMN passphrase VARCHAR(100);
+      `);
+
+        // Insert test data
+        await client.query(`
+        INSERT INTO event (title, time, description, route_url, ride_type, route_length, location, organization_id, users_joined, start_point_address, ride_pace, area, event_leader_name, passphrase)
+        VALUES 
+        ('Morning Ride', '2024-06-01 07:30:00', 'A fun morning ride', 'http://routeurl.com/1', 'Road', 25.5, 'Central Park', 1, '{"user1", "user2"}', '123 Main St', 'Moderate', 'Downtown', 'John Doe', 'morning123'),
+        ('Evening Cruise', '2024-06-02 18:00:00', 'Relaxed evening ride', 'http://routeurl.com/2', 'Mountain', 30.0, 'Riverside', 1, '{"user3", "user4"}', '456 Elm St', 'Leisurely', 'Uptown', 'Jane Smith', 'evening456');
+      `);
+
+        console.log('Table altered and test data inserted successfully.');
+        await client.query('COMMIT');
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
 
 main();

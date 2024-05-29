@@ -55,3 +55,28 @@ export async function fetchEvents() {
     }
   }
   
+
+  export async function fetchEventById(id: string) {
+    try {
+      const data = await sql`
+        SELECT 
+          title, 
+          time, 
+          description, 
+          route_url, 
+          ride_type, 
+          route_length, 
+          location, 
+          start_point_address, 
+          ride_pace, 
+          area, 
+          event_leader_name
+        FROM event
+        WHERE id = ${id}
+      `;
+      return data.rows[0];
+    } catch (err) {
+      console.error('Database Error:', err);
+      throw new Error('Failed to fetch event details.');
+    }
+  }
