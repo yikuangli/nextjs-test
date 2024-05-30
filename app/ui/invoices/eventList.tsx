@@ -10,6 +10,7 @@ export default async function EventList({
   currentPage?: number;
 }) {
   const events = await fetchEvents();
+  // console.log(events);
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
