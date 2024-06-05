@@ -5,12 +5,16 @@ import styles from '@/app/ui/home.module.css';
 import Image from 'next/image';
 import { fetchEvents } from './lib/query';
 import EventList from './ui/invoices/eventList';
+import { CreateActivity } from './ui/invoices/buttons';
 
 
 export default async function Page() {
   let eventList = await fetchEvents()
   return (
     <main>
+       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <CreateActivity></CreateActivity>
+      </div>
       <EventList/>
     </main>
     // <main className="flex min-h-screen flex-col p-6">
