@@ -1,5 +1,7 @@
-"use client"
+'use client';
+import { createEvent } from '@/app/lib/actions';
 import React, { useState } from 'react';
+
 
 const areas = [
   'Downtown',
@@ -7,8 +9,7 @@ const areas = [
   'Markham',
   'Oakville',
   'Richmond Hill',
-  'Mississauga',
-  "Scarbrough"
+  'Mississauga'
 ];
 
 const ridePaces = ['<=20', '20-25', '25-30', '30+'];
@@ -18,23 +19,34 @@ const EventFormComponent: React.FC = () => {
   const [description, setDescription] = useState('');
   const [eventTime, setEventTime] = useState('');
   const [area, setArea] = useState('');
-  const [routeUrl, setRouteUrl] = useState('');
+  const [routeUrl, setRouteUrl] = useState("");
   const [location, setLocation] = useState('');
+  const [routeLength, setRouteLength] = useState('');
   const [ridePace, setRidePace] = useState('');
+  const [eventLeaderName, setEventLeaderName] = useState('');
+  const [passphrase, setPassphrase] = useState('');
+  const [errors, setErrors] = useState<any>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would normally handle the form submission,
-    // like sending the data to your backend.
-    console.log({
-      title,
-      description,
-      eventTime,
-      area,
-      routeUrl,
-      location,
-      ridePace
-    });
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('eventTime', eventTime);
+    formData.append('area', area);
+    formData.append('routeUrl', routeUrl);
+    formData.append("routeLength", routeLength)
+    formData.append('location', location);
+    formData.append('ridePace', ridePace);
+    formData.append('eventLeaderName', eventLeaderName);
+    formData.append('passphrase', passphrase);
+
+    const result = await createEvent(formData);
+    if (result?.errors) {
+      setErrors(result.errors);
+    } else {
+      // Handle successful event creation (e.g., show a success message or redirect)
+    }
   };
 
   return (
@@ -50,17 +62,9 @@ const EventFormComponent: React.FC = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Description</label>
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            required
-          ></textarea>
-        </div>
+      
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Event Time</label>
           <input
@@ -70,6 +74,7 @@ const EventFormComponent: React.FC = () => {
             onChange={(e) => setEventTime(e.target.value)}
             required
           />
+          {errors.eventTime && <p className="text-red-500 text-sm">{errors.eventTime}</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Area</label>
@@ -86,6 +91,7 @@ const EventFormComponent: React.FC = () => {
               </option>
             ))}
           </select>
+          {errors.area && <p className="text-red-500 text-sm">{errors.area}</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Route URL</label>
@@ -94,8 +100,8 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={routeUrl}
             onChange={(e) => setRouteUrl(e.target.value)}
-            required
           />
+          {errors.routeUrl && <p className="text-red-500 text-sm">{errors.routeUrl}</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Location</label>
@@ -106,6 +112,18 @@ const EventFormComponent: React.FC = () => {
             onChange={(e) => setLocation(e.target.value)}
             required
           />
+          {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Route Length</label>
+          <input
+            type="number"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={routeLength}
+            onChange={(e) => setRouteLength(e.target.value)}
+            required
+          />
+          {errors.routeLength && <p className="text-red-500 text-sm">{errors.routeLength}</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Ride Pace</label>
@@ -113,7 +131,6 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={ridePace}
             onChange={(e) => setRidePace(e.target.value)}
-            required
           >
             <option value="">Select a ride pace</option>
             {ridePaces.map((pace) => (
@@ -122,6 +139,40 @@ const EventFormComponent: React.FC = () => {
               </option>
             ))}
           </select>
+          {errors.ridePace && <p className="text-red-500 text-sm">{errors.ridePace}</p>}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Description</label>
+          <textarea
+            className="w-full p-2 border border-gray-300 rounded"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={4}
+            required
+          ></textarea>
+          {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Event Leader Name</label>
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={eventLeaderName}
+            onChange={(e) => setEventLeaderName(e.target.value)}
+            required
+          />
+          {errors.eventLeaderName && <p className="text-red-500 text-sm">{errors.eventLeaderName}</p>}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Passphrase</label>
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={passphrase}
+            onChange={(e) => setPassphrase(e.target.value)}
+            
+          />
+          {errors.passphrase && <p className="text-red-500 text-sm">{errors.passphrase}</p>}
         </div>
         <button
           type="submit"

@@ -1,5 +1,8 @@
+
 import { fetchEvents } from '@/app/lib/query';
+import Link from 'next/link';
 import React from 'react';
+import { ShowActivity } from '../invoices/buttons';
 
 
 export default async function EventList({
@@ -26,7 +29,6 @@ export default async function EventList({
                     <div className="mb-2 flex items-center">
                       <p>{event.title}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{event.ride_type}</p>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
@@ -45,14 +47,15 @@ export default async function EventList({
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Title
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Ride Type
-                </th>
+
                 <th scope="col" className="px-3 py-5 font-medium">
                   Route Length (km)
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Location
+                  Ride pace(km/h)
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Area
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Time
@@ -61,28 +64,36 @@ export default async function EventList({
             </thead>
             <tbody className="bg-white">
               {events?.map((event) => (
-                <tr
-                  key={event.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <p>{event.title}</p>
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {event.ride_type}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {event.route_length}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {event.location}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {new Date(event.time).toLocaleString()}
-                  </td>
-                </tr>
+
+                
+                  <tr
+                    key={event.id}
+                    className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  >
+
+                    <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                      <div className="flex items-center gap-3">
+                        <p>{event.title}</p>
+                      </div>
+                    </td>
+
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {event.route_length}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {event.ride_pace}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {event.area}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {new Date(event.time).toLocaleString()}
+                    </td>
+                    <ShowActivity id={event.id}/>
+
+                  </tr>
+               
+
               ))}
             </tbody>
           </table>

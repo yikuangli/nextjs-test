@@ -44,6 +44,8 @@ export async function fetchEvents() {
           ride_type,
           route_length,
           location,
+          ride_pace,
+          area,
           organization_id,
           users_joined
         FROM event

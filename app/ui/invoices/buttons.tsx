@@ -1,6 +1,7 @@
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { deleteInvoice } from '@/app/lib/actions';
+import { EyeIcon } from '@heroicons/react/20/solid';
 export function CreateInvoice() {
   return (
     <Link
@@ -21,6 +22,17 @@ export function CreateActivity() {
     >
       <span className="hidden md:block">Create Activity</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
+    </Link>
+  );
+}
+
+export function ShowActivity({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/${id}/activity`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+    >
+      <EyeIcon className="w-5" />
     </Link>
   );
 }

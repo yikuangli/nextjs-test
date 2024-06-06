@@ -21,7 +21,18 @@ export default async function Page({ params }: { params: { id: string } }) {
 		));
 	};
 	return (
+		
 		<main>
+			 <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Activity', href: '/' },
+          {
+            label: event.title,
+            href: `/${id}/activity`,
+            active: true,
+          },
+        ]}
+      />
 			<div className="bg-gray-100 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
 				<Head>
 					<title>{event.title} - Event Details</title>

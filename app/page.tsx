@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from '@/app/ui/home.module.css';
 import Image from 'next/image';
 import { fetchEvents } from './lib/query';
-import EventList from './ui/invoices/eventList';
+import EventList from './ui/ride/eventList';
 import { CreateActivity } from './ui/invoices/buttons';
 
 
