@@ -62,6 +62,21 @@ export async function fetchEvents() {
 }
 
 
+export async function deleteEvent(eventId: string, passphrase: string) {
+  // Verify the passphrase before deleting
+  const data = await sql`
+    SELECT passphrase FROM event WHERE id = ${eventId}
+  `;
+  const events = data.rows;
+  if (events.length === 0 || events[0].passphrase !== passphrase) {
+    throw new Error('Invalid passphrase');
+  }
+
+  await sql`
+    DELETE FROM event WHERE id = ${eventId}
+  `;
+}
+
 export async function fetchEventById(id: string): Promise<RideEvent | null> {
 	console.log('POSTGRES_URL:', process.env.POSTGRES_URL);
 	try {
