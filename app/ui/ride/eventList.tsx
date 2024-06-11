@@ -49,25 +49,24 @@ export default async function EventList({
               <div className="px-2 py-3 font-medium">Actions</div>
             </div>
             {events?.map((event) => (
-              <Link key={event.id} href={`/${event.id}/activity`} passHref>
-                <div className="block mb-2 w-full bg-white p-2 rounded-md hover:bg-gray-100">
-                  <div className="grid grid-cols-6 gap-4 border-b py-0 text-sm">
-                    <div className="whitespace-nowrap py-3 pl-6 pr-3">
+              <div key={event.id} className="grid grid-cols-2 gap-4 border-b py-2 text-sm mb-2 w-full bg-white p-2 rounded-md hover:bg-gray-100"  style={{ gridTemplateColumns: '5fr 1fr' }}>
+                <Link href={`/${event.id}/activity`} passHref>
+                  <div className="grid grid-cols-5 gap-4 items-center">
+                    <div className="whitespace-nowrap py-2 pl-3 pr-2">
                       <p>{event.title}</p>
                     </div>
-                    <div className="whitespace-nowrap px-3 py-3">{event.route_length}</div>
-                    <div className="whitespace-nowrap px-3 py-3">{event.ride_pace}</div>
-                    <div className="whitespace-nowrap px-3 py-3">{event.area}</div>
-                    <div className="whitespace-nowrap px-3 py-3">
+                    <div className="whitespace-nowrap px-2 py-2">{event.route_length}</div>
+                    <div className="whitespace-nowrap px-2 py-2">{event.ride_pace}</div>
+                    <div className="whitespace-nowrap px-2 py-2">{event.area}</div>
+                    <div className="whitespace-nowrap px-2 py-2">
                       {new Date(event.time).toLocaleString()}
                     </div>
-                    <div className="whitespace-nowrap px-3 py-3">
-                      <DeleteButton eventId={event.id} />
-                    </div>
                   </div>
+                </Link>
+                <div className="flex items-center justify-center">
+                  <DeleteButton eventId={event.id} />
                 </div>
-              </Link>
-
+              </div>
             ))}
           </div>
         </div>
