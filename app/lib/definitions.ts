@@ -86,3 +86,17 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+
+export type TActivity = {
+  id: string;
+  title: string;
+  route_length: number;
+  ride_pace: string;
+  area: string;
+  time: string;
+  description: string;
+  location: string;
+  start_point_address: string;
+  event_leader_name: string;
+}

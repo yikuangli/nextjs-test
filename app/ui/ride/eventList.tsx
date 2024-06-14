@@ -2,6 +2,8 @@ import { fetchEvents } from '@/app/lib/query';
 import Link from 'next/link';
 import React from 'react';
 import DeleteButton from './DeleteButton';
+import EditButton from './EditActivity';
+import { TActivity } from '@/app/lib/definitions';
 
 export default async function EventList({
   query,
@@ -25,7 +27,6 @@ export default async function EventList({
                       <div className="mb-2 flex items-center">
                         <p>{event.title}</p>
                       </div>
-                      <p className="text-sm text-gray-500">{event.ride_type}</p>
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-between pt-4">
@@ -48,7 +49,7 @@ export default async function EventList({
               <div className="px-3 py-5 font-medium">Time</div>
               <div className="px-2 py-3 font-medium">Actions</div>
             </div>
-            {events?.map((event) => (
+            {events?.map((event: TActivity) => (
               <div key={event.id} className="grid grid-cols-2 gap-4 border-b py-2 text-sm mb-2 w-full bg-white p-2 rounded-md hover:bg-gray-100"  style={{ gridTemplateColumns: '5fr 1fr' }}>
                 <Link href={`/${event.id}/activity`} passHref>
                   <div className="grid grid-cols-5 gap-4 items-center">
@@ -64,6 +65,8 @@ export default async function EventList({
                   </div>
                 </Link>
                 <div className="flex items-center justify-center">
+
+                  <EditButton event={event} onUpdate={fetchEvents}/>
                   <DeleteButton eventId={event.id} />
                 </div>
               </div>
