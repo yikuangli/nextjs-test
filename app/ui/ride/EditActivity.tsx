@@ -91,8 +91,8 @@ const EditButton: React.FC<EditButtonProps> = ({ event, onUpdate }) => {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-auto">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-full overflow-y-auto">
             <h2 className="text-xl font-bold mb-4">Edit Event</h2>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Title</label>

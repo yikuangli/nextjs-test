@@ -89,6 +89,7 @@ export type InvoiceForm = {
 
 
 export type TActivity = {
+  users_joined: any;
   id: string;
   title: string;
   route_length: number;

@@ -18,26 +18,33 @@ export default async function EventList({
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <div className="md:hidden">
+        <div className="md:hidden">
             {events?.map((event) => (
-              <Link key={event.id} href={`/${event.id}/activity`} passHref>
-                <div className="block mb-2 w-full rounded-md bg-white p-4">
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <div>
-                      <div className="mb-2 flex items-center">
-                        <p>{event.title}</p>
+              <div key={event.id} className="block mb-2 w-full rounded-md bg-white p-4">
+                <Link href={`/${event.id}/activity`} passHref>
+                  <div>
+                    <div className="flex items-center justify-between border-b pb-4">
+                      <div>
+                        <div className="mb-2 flex items-center">
+                          <p>{event.title}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex w-full items-center justify-between pt-4">
+                      <div>
+                        <p className="text-xl font-medium">{event.route_length} km</p>
+                        <p>{event.location}</p>
+                        <p>{new Date(event.time).toLocaleString()}</p>
+                        <p>Total Participants: {event.users_joined ? event.users_joined.length : 0}</p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between pt-4">
-                    <div>
-                      <p className="text-xl font-medium">{event.route_length} km</p>
-                      <p>{event.location}</p>
-                      <p>{new Date(event.time).toLocaleString()}</p>
-                    </div>
-                  </div>
+                </Link>
+                <div className="flex items-center justify-end space-x-2 mt-2">
+                  <EditButton event={event} onUpdate={fetchEvents} />
+                  <DeleteButton eventId={event.id} />
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
           <div className="hidden md:block">
