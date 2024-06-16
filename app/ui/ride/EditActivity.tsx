@@ -62,7 +62,7 @@ const EditButton: React.FC<EditButtonProps> = ({ event, onUpdate }) => {
       </button>
 
       {showPassphraseModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
             <h2 className="text-xl font-bold mb-4">Enter Passphrase</h2>
             <input
@@ -91,99 +91,102 @@ const EditButton: React.FC<EditButtonProps> = ({ event, onUpdate }) => {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-auto">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-full overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Edit Event</h2>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Title</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg flex flex-col max-h-full">
+            <div className="overflow-y-auto p-6 flex-grow">
+              <h2 className="text-xl font-bold mb-4">Edit Event</h2>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Route Length (km)</label>
+                <input
+                  type="number"
+                  name="route_length"
+                  value={formData.route_length}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Ride Pace (km/h)</label>
+                <input
+                  type="text"
+                  name="ride_pace"
+                  value={formData.ride_pace}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Area</label>
+                <input
+                  type="text"
+                  name="area"
+                  value={formData.area}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Time</label>
+                <input
+                  type="datetime-local"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={8}
+                  className="w-full p-2 border border-gray-300 rounded"
+                ></textarea>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Start Point Address</label>
+                <input
+                  type="text"
+                  name="start_point_address"
+                  value={formData.start_point_address}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Event Leader Name</label>
+                <input
+                  type="text"
+                  name="event_leader_name"
+                  value={formData.event_leader_name}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Route Length (km)</label>
-              <input
-                type="number"
-                name="route_length"
-                value={formData.route_length}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Ride Pace (km/h)</label>
-              <input
-                type="text"
-                name="ride_pace"
-                value={formData.ride_pace}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Area</label>
-              <input
-                type="text"
-                name="area"
-                value={formData.area}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Time</label>
-              <input
-                type="datetime-local"
-                name="time"
-                value={formData.time}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Description</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              ></textarea>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Location</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Start Point Address</label>
-              <input
-                type="text"
-                name="start_point_address"
-                value={formData.start_point_address}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Event Leader Name</label>
-              <input
-                type="text"
-                name="event_leader_name"
-                value={formData.event_leader_name}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="flex justify-end">
+            <div className="p-6 bg-gray-100 flex justify-end">
               <button
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
                 onClick={() => setShowModal(false)}

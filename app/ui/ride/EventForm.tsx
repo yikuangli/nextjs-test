@@ -147,7 +147,7 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows={4}
+            rows={8}
             required
           ></textarea>
           {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
@@ -164,7 +164,7 @@ const EventFormComponent: React.FC = () => {
           {errors.eventLeaderName && <p className="text-red-500 text-sm">{errors.eventLeaderName}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Passphrase</label>
+          <label className="block text-gray-700 mb-2">Passphrase</label> 
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded"
