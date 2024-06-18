@@ -67,10 +67,10 @@ export default async function EventList({
                     <div className="whitespace-nowrap px-2 py-2">{event.route_length}</div>
                     <div className="whitespace-nowrap px-2 py-2">{event.ride_pace}</div>
                     <div className="whitespace-nowrap px-2 py-2">{event.area}</div>
-                    <div className="whitespace-nowrap px-2 py-2"> {event.users_joined ? event.users_joined.length : 0}</div>
                     <div className="whitespace-nowrap px-2 py-2">
                       {new Date(event.time).toLocaleString()}
                     </div>
+                    <div className="whitespace-nowrap px-2 py-2"> {event.users_joined ? event.users_joined.length : 0}</div>
                   </div>
                 </Link>
                 <div className="grid grid-cols-2 items-center justify-center ">
