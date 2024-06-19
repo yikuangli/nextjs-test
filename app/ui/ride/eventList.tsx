@@ -14,13 +14,19 @@ export default async function EventList({
 }) {
   const events = await fetchEvents();
 
+  // Sort events by time
+  const sortedEvents = events.sort((a: TActivity, b: TActivity) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
+  // Get current time
+  const now = new Date().getTime();
+
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            {events?.map((event) => (
-              <div key={event.id} className="block mb-2 w-full rounded-md bg-white p-4">
+            {sortedEvents?.map((event) => (
+              <div key={event.id} className={`block mb-2 w-full rounded-md  p-4 ${new Date(event.time).getTime() < now ? 'bg-gray-300' : 'bg-white'}`}>
                 <Link href={`/${event.id}/activity`} passHref>
                   <div>
                     <div className="flex items-center justify-between border-b pb-4">
@@ -57,8 +63,8 @@ export default async function EventList({
               <div className="px-3 py-5 font-medium">Total Participants</div>
               <div className="px-2 py-3 font-medium text-center">Actions</div>
             </div>
-            {events?.map((event: TActivity) => (
-              <div key={event.id} className="grid grid-cols-2 gap-4 border-b py-2 text-sm mb-2 w-full bg-white p-2 rounded-md hover:bg-gray-100" style={{ gridTemplateColumns: '6fr 1fr' }}>
+            {sortedEvents?.map((event: TActivity) => (
+              <div key={event.id} className={`grid grid-cols-2 gap-4 border-b py-2 text-sm mb-2 w-full p-2 rounded-md hover:bg-gray-100 ${new Date(event.time).getTime() < now ? 'bg-gray-300' : 'bg-white'}`} style={{ gridTemplateColumns: '6fr 1fr' }}>
                 <Link href={`/${event.id}/activity`} passHref>
                   <div className="grid grid-cols-6 gap-4 items-center">
                     <div className="whitespace-nowrap py-2 pl-3 pr-2">
@@ -76,7 +82,6 @@ export default async function EventList({
                 <div className="grid grid-cols-2 items-center justify-center ">
                   <div className="whitespace-nowrap px-2 py-2  items-center justify-center text-center" > <EditButton event={event} onUpdate={fetchEvents} /></div>
                   <div className="whitespace-nowrap px-2 py-2  items-center justify-center text-center">   <DeleteButton eventId={event.id} /><div />
-
                   </div>
                 </div>
               </div>
