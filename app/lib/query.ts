@@ -32,27 +32,93 @@ export async function fetchEventsByOrganization(organizationId: string) {
     }
 }
 
-
-export async function fetchEvents(): Promise<Array<TActivity>> {
+interface FetchEventsParams {
+    time?: string;
+    area?: string;
+  }
+export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promise<Array<TActivity>> {
     try {
-        const data = await sql`
-        SELECT
-          id,
-          title,
-          time,
-          description,
-          route_url,
-          ride_type,
-          route_length,
-          location,
-          ride_pace,
-          area,
-          organization_id,
-          users_joined
-        FROM event
-      
-        ORDER BY time ASC
-      `;
+        let query;
+        const params = [];
+
+        if (time && area) {
+            query = sql`
+          SELECT
+            id,
+            title,
+            time,
+            description,
+            route_url,
+            ride_type,
+            route_length,
+            location,
+            ride_pace,
+            area,
+            organization_id,
+            users_joined
+          FROM event
+          WHERE time >= ${time} AND area ILIKE ${`%${area}%`}
+          ORDER BY time ASC
+        `;
+        } else if (time) {
+            query = sql`
+          SELECT
+            id,
+            title,
+            time,
+            description,
+            route_url,
+            ride_type,
+            route_length,
+            location,
+            ride_pace,
+            area,
+            organization_id,
+            users_joined
+          FROM event
+          WHERE time >= ${time}
+          ORDER BY time ASC
+        `;
+        } else if (area) {
+            query = sql`
+          SELECT
+            id,
+            title,
+            time,
+            description,
+            route_url,
+            ride_type,
+            route_length,
+            location,
+            ride_pace,
+            area,
+            organization_id,
+            users_joined
+          FROM event
+          WHERE area ILIKE ${`%${area}%`}
+          ORDER BY time ASC
+        `;
+        } else {
+            query = sql`
+          SELECT
+            id,
+            title,
+            time,
+            description,
+            route_url,
+            ride_type,
+            route_length,
+            location,
+            ride_pace,
+            area,
+            organization_id,
+            users_joined
+          FROM event
+          ORDER BY time ASC
+        `;
+        }
+
+        const data = await query;
 
         const events = data.rows as TActivity[];
         return events;

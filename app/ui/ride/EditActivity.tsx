@@ -5,10 +5,9 @@ import { TActivity } from '@/app/lib/definitions';
 
 interface EditButtonProps {
   event: TActivity
-  onUpdate: () => void;
 }
 
-const EditButton: React.FC<EditButtonProps> = ({ event, onUpdate }) => {
+const EditButton: React.FC<EditButtonProps> = ({ event, }) => {
   const [showModal, setShowModal] = useState(false);
   const [showPassphraseModal, setShowPassphraseModal] = useState(false);
   const [passphrase, setPassphrase] = useState('');
@@ -46,7 +45,7 @@ const EditButton: React.FC<EditButtonProps> = ({ event, onUpdate }) => {
     try {
       await updateEvent(event.id, formData);
       setShowModal(false);
-      onUpdate(); // Trigger the parent component to update the list
+      // onUpdate(); // Trigger the parent component to update the list
     } catch (err) {
       console.error('Failed to update event', err);
     }
