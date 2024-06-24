@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { fetchEvents } from './lib/query';
 import EventList from './ui/ride/eventList';
 import { CreateActivity } from './ui/invoices/buttons';
+import FilterBar from './ui/ride/filterbar';
 
 
 export default async function Page({
@@ -18,13 +19,15 @@ export default async function Page({
 }) {
 	const area = searchParams?.area || undefined;
 	const time = searchParams?.time || undefined;
-	let eventList = await fetchEvents({time,area})
+	let eventList = await fetchEvents({ time, area })
 	return (
 		<main>
-			<div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-				<CreateActivity></CreateActivity>
+			<div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-2 md:mt-8">
+
+				<CreateActivity />
+				<FilterBar />
 			</div>
-			<EventList  events={eventList}/>
+			<EventList events={eventList} />
 		</main>
 		// <main className="flex min-h-screen flex-col p-6">
 		//   <div className="flex h-20 shrink-0 items-end rounded-lg bg-orange-500 p-4 md:h-52">

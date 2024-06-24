@@ -7,7 +7,7 @@ export default async function Page() {
   // ...
   return (
     <main>
-    <EventList/>
+    {/* <EventList/> */}
   </main>
   );
 }
