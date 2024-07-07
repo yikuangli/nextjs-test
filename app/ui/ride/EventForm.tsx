@@ -2,7 +2,6 @@
 import { createEvent } from '@/app/lib/actions';
 import React, { useState } from 'react';
 
-
 const areas = [
   'Downtown',
   'North York',
@@ -26,32 +25,52 @@ const EventFormComponent: React.FC = () => {
   const [eventLeaderName, setEventLeaderName] = useState('');
   const [passphrase, setPassphrase] = useState('');
   const [errors, setErrors] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setErrors({});
+    setSuccess(null);
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
     formData.append('eventTime', eventTime);
     formData.append('area', area);
     formData.append('routeUrl', routeUrl);
-    formData.append("routeLength", routeLength)
+    formData.append("routeLength", routeLength);
     formData.append('location', location);
     formData.append('ridePace', ridePace);
     formData.append('eventLeaderName', eventLeaderName);
     formData.append('passphrase', passphrase);
 
     const result = await createEvent(formData);
+    setLoading(false);
+
     if (result?.errors) {
       setErrors(result.errors);
     } else {
-      // Handle successful event creation (e.g., show a success message or redirect)
+      setSuccess('Event created successfully!');
+      // Clear the form
+      setTitle('');
+      setDescription('');
+      setEventTime('');
+      setArea('');
+      setRouteUrl('');
+      setLocation('');
+      setRouteLength('');
+      setRidePace('');
+      setEventLeaderName('');
+      setPassphrase('');
     }
   };
 
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-4">Create Event</h2>
+      {success && <p className="text-green-500 mb-4">{success}</p>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Title</label>
@@ -61,6 +80,7 @@ const EventFormComponent: React.FC = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            disabled={loading}
           />
           {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
@@ -73,6 +93,7 @@ const EventFormComponent: React.FC = () => {
             value={eventTime}
             onChange={(e) => setEventTime(e.target.value)}
             required
+            disabled={loading}
           />
           {errors.eventTime && <p className="text-red-500 text-sm">{errors.eventTime}</p>}
         </div>
@@ -83,6 +104,7 @@ const EventFormComponent: React.FC = () => {
             value={area}
             onChange={(e) => setArea(e.target.value)}
             required
+            disabled={loading}
           >
             <option value="">Select an area</option>
             {areas.map((area) => (
@@ -100,6 +122,7 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={routeUrl}
             onChange={(e) => setRouteUrl(e.target.value)}
+            disabled={loading}
           />
           {errors.routeUrl && <p className="text-red-500 text-sm">{errors.routeUrl}</p>}
         </div>
@@ -111,6 +134,7 @@ const EventFormComponent: React.FC = () => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
+            disabled={loading}
           />
           {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
         </div>
@@ -122,6 +146,7 @@ const EventFormComponent: React.FC = () => {
             value={routeLength}
             onChange={(e) => setRouteLength(e.target.value)}
             required
+            disabled={loading}
           />
           {errors.routeLength && <p className="text-red-500 text-sm">{errors.routeLength}</p>}
         </div>
@@ -131,6 +156,7 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={ridePace}
             onChange={(e) => setRidePace(e.target.value)}
+            disabled={loading}
           >
             <option value="">Select a ride pace</option>
             {ridePaces.map((pace) => (
@@ -149,6 +175,7 @@ const EventFormComponent: React.FC = () => {
             onChange={(e) => setDescription(e.target.value)}
             rows={8}
             required
+            disabled={loading}
           ></textarea>
           {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
         </div>
@@ -160,6 +187,7 @@ const EventFormComponent: React.FC = () => {
             value={eventLeaderName}
             onChange={(e) => setEventLeaderName(e.target.value)}
             required
+            disabled={loading}
           />
           {errors.eventLeaderName && <p className="text-red-500 text-sm">{errors.eventLeaderName}</p>}
         </div>
@@ -170,15 +198,16 @@ const EventFormComponent: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={passphrase}
             onChange={(e) => setPassphrase(e.target.value)}
-            
+            disabled={loading}
           />
           {errors.passphrase && <p className="text-red-500 text-sm">{errors.passphrase}</p>}
         </div>
         <button
           type="submit"
           className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          disabled={loading}
         >
-          Create Event
+          {loading ? 'Creating...' : 'Create Event'}
         </button>
       </form>
     </div>
