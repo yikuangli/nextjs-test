@@ -127,7 +127,7 @@ const EventFormComponent: React.FC = () => {
           {errors.routeUrl && <p className="text-red-500 text-sm">{errors.routeUrl}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Location</label>
+          <label className="block text-gray-700 mb-2">Location <span  className="text-sm">(Event starter point)</span></label>
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded"
@@ -180,7 +180,7 @@ const EventFormComponent: React.FC = () => {
           {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Event Leader Name</label>
+          <label className="block text-gray-700 mb-2">Organizer Name</label>
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded"
@@ -192,7 +192,7 @@ const EventFormComponent: React.FC = () => {
           {errors.eventLeaderName && <p className="text-red-500 text-sm">{errors.eventLeaderName}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Passphrase</label> 
+          <label className="block text-gray-700 mb-2">Passphrase <span className="text-sm"> (For modify the event later) </span></label> 
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded"
