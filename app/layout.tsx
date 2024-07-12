@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <GoogleAnalytics gaId="G-0K53J8VR1L" />
+      <GoogleAnalytics gaId="G-80G5P7JKKJ" />
       <body className={`${inter.className} antialiased`}> <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
         <div className="w-full flex-none md:w-64">
           <SideNav />
