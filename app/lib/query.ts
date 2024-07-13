@@ -151,14 +151,21 @@ export async function deleteEvent(eventId: string, passphrase: string) {
 	const data = await sql`
     SELECT passphrase FROM event WHERE id = ${eventId}
   `;
+  let link = `/`
 	const events = data.rows;
 	console.log(events[0])
 	// console.log(events[0].passphrase)
 	console.log(passphrase)
+	if(!events[0]){
+		revalidatePath(link);
+		redirect(link);
+	}
 	if (!events[0].passphrase && passphrase.length === 0) {
 		await sql`
     DELETE FROM event WHERE id = ${eventId}
   `;
+		revalidatePath(link);
+		redirect(link);
 		return
 	}
 	if (events.length === 0 || events[0].passphrase !== passphrase) {
@@ -168,7 +175,6 @@ export async function deleteEvent(eventId: string, passphrase: string) {
 	await sql`
     DELETE FROM event WHERE id = ${eventId}
   `;
-	let link = `/`
 	revalidatePath(link);
 	redirect(link);
 }
