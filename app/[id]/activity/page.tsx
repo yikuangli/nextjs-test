@@ -60,10 +60,6 @@ export default async function Page({ params }: { params: { id: string } }) {
 						<p className="text-gray-600">{event.location}</p>
 					</div>
 					<div className="mb-2">
-						<strong className="block text-gray-700">Start Point Address:</strong>
-						<p className="text-gray-600">{event.start_point_address}</p>
-					</div>
-					<div className="mb-2">
 						<strong className="block text-gray-700">Ride Pace:</strong>
 						<p className="text-gray-600">{event.ride_pace}</p>
 					</div>

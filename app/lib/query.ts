@@ -4,6 +4,7 @@ import { RideEvent } from './types';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { TActivity } from './definitions';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchEventsByOrganization(organizationId: string) {
 	try {
@@ -37,6 +38,7 @@ interface FetchEventsParams {
 	area?: string;
 }
 export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promise<Array<TActivity>> {
+	noStore();
 	try {
 		let query;
 		const params = [];
@@ -55,7 +57,8 @@ export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promi
             ride_pace,
             area,
             organization_id,
-            users_joined
+            users_joined,
+			event_leader_name
           FROM event
           WHERE time >= ${time} AND area ILIKE ${`%${area}%`}
           ORDER BY time ASC
@@ -74,7 +77,8 @@ export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promi
             ride_pace,
             area,
             organization_id,
-            users_joined
+            users_joined,
+			event_leader_name
           FROM event
           WHERE time >= ${time}
           ORDER BY time ASC
@@ -93,7 +97,8 @@ export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promi
             ride_pace,
             area,
             organization_id,
-            users_joined
+            users_joined,
+			event_leader_name
           FROM event
           WHERE area ILIKE ${`%${area}%`}
           ORDER BY time ASC
@@ -112,7 +117,8 @@ export async function fetchEvents({ time, area }: FetchEventsParams = {}): Promi
             ride_pace,
             area,
             organization_id,
-            users_joined
+            users_joined,
+			event_leader_name
           FROM event
           ORDER BY time ASC
         `;
@@ -204,6 +210,7 @@ export async function updateEvent(eventId: string, data: any) {
 
 export async function fetchEventById(id: string): Promise<RideEvent | null> {
 	console.log('POSTGRES_URL:', process.env.POSTGRES_URL);
+	noStore();
 	try {
 		const data = await sql<RideEvent>`
         SELECT 

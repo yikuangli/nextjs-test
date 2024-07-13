@@ -3,6 +3,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { useState } from 'react';
+import { RideAreas } from '@/app/lib/utils';
 
 const FilterBar = () => {
 	const searchParams = useSearchParams();
@@ -55,12 +56,11 @@ const FilterBar = () => {
 					className="p-2 border border-gray-300 rounded flex-1 sm:flex-none"
 				>
 					<option value="">All</option>
-					<option value="Downtown">Downtown</option>
-					<option value="North York">North York</option>
-					<option value="Markham">Markham</option>
-					<option value="Oakville">Oakville</option>
-					<option value="Richmond Hill">Richmond Hill</option>
-					<option value="Mississauga">Mississauga</option>
+					{RideAreas.map((area) => (
+						<option key={area} value={area}>
+							{area}
+						</option>
+					))}
 				</select>
 			</div>
 		</div>

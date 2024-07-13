@@ -67,3 +67,23 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+
+export const RideAreas = [
+  'Downtown',
+  'North York',
+  'Markham',
+  'Oakville',
+  'Richmond Hill',
+  'Mississauga',
+  "Goodwood",
+  "Niagara Falls",
+  "Pickering/Ajax",
+  "Lake Simcoe",
+  "Brampton",
+  "Vaughan",
+  "Other"
+];
+
+
+export const RidePace = ['<=20', '20-25', '25-30', '30+'];

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { updateEvent, validatePassphrase } from '@/app/lib/query'; // Ensure these functions are defined in your query file
 import { TActivity } from '@/app/lib/definitions';
+import { RideAreas, RidePace } from '@/app/lib/utils';
 
 interface EditButtonProps {
   event: TActivity
@@ -23,7 +24,7 @@ const EditButton: React.FC<EditButtonProps> = ({ event, }) => {
     event_leader_name: event.event_leader_name,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -116,23 +117,35 @@ const EditButton: React.FC<EditButtonProps> = ({ event, }) => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Ride Pace (km/h)</label>
-                <input
-                  type="text"
-                  name="ride_pace"
-                  value={formData.ride_pace}
-                  onChange={handleChange}
+                <select
                   className="w-full p-2 border border-gray-300 rounded"
-                />
+                  value={formData.ride_pace}
+                  name="ride_pace"
+                  onChange={handleChange}
+                >
+                  <option value="">Select a ride pace</option>
+                  {RidePace.map((pace) => (
+                    <option key={pace} value={pace}>
+                      {pace}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Area</label>
-                <input
-                  type="text"
-                  name="area"
+                <select
+                  className="w-full p-2 border border-gray-300 rounded"
                   value={formData.area}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
+                  name="area"
+                >
+                  <option value="">Select an area</option>
+                  {RideAreas.map((area) => (
+                    <option key={area} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2">Time</label>
@@ -150,7 +163,7 @@ const EditButton: React.FC<EditButtonProps> = ({ event, }) => {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  rows={8}
+                  rows={10}
                   className="w-full p-2 border border-gray-300 rounded"
                 ></textarea>
               </div>
@@ -160,16 +173,6 @@ const EditButton: React.FC<EditButtonProps> = ({ event, }) => {
                   type="text"
                   name="location"
                   value={formData.location}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Start Point Address</label>
-                <input
-                  type="text"
-                  name="start_point_address"
-                  value={formData.start_point_address}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />

@@ -1,17 +1,11 @@
 'use client';
 import { createEvent } from '@/app/lib/actions';
+import { RideAreas, RidePace } from '@/app/lib/utils';
 import React, { useState } from 'react';
 
-const areas = [
-  'Downtown',
-  'North York',
-  'Markham',
-  'Oakville',
-  'Richmond Hill',
-  'Mississauga'
-];
 
-const ridePaces = ['<=20', '20-25', '25-30', '30+'];
+const areas = RideAreas;
+const ridePaces = RidePace;
 
 const EventFormComponent: React.FC = () => {
   const [title, setTitle] = useState('');
